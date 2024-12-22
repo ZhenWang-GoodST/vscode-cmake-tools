@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "CMake-Cache bearbeiten",
 	"cmake-tools.command.cmake.quickStart.title": "Schnellstart",
 	"cmake-tools.command.cmake.debugTarget.title": "Debuggen",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Alle Projekte debuggen",
 	"cmake-tools.command.cmake.launchTarget.title": "Ohne Debuggen ausführen",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Alle Projekte ohne Debuggen ausführen",

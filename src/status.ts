@@ -349,6 +349,35 @@ class DebugButton extends Button {
     }
 }
 
+class DebugButtonWithoutBuild extends Button {
+    settingsName = 'magic debug';
+    constructor(protected readonly config: ConfigurationReader, protected readonly priority: number) {
+        super(config, priority);
+        this.command = 'cmake.debugTargetWithoutBuild';
+        this.icon = 'play';
+        this.text = 'magic debug'
+        this.tooltip = localize('launch.debugger.tooltip', 'Launch the magic debugger for the selected target');
+    }
+
+    private _target: string | null = null;
+
+    set target(v: string | null) {
+        this._target = v;
+        this.update();
+    }
+
+    protected getTooltipNormal(): string | null {
+        if (!!this._target) {
+            return `${this.tooltip}: [${this._target}]`;
+        }
+        return this.tooltip;
+    }
+
+    protected isVisible(): boolean {
+        return super.isVisible() && hasCPPTools();
+    }
+}
+
 class LaunchButton extends Button {
     settingsName = 'launch';
     constructor(protected readonly config: ConfigurationReader, protected readonly priority: number) {
@@ -639,6 +668,7 @@ export class StatusBar implements vscode.Disposable {
     private readonly _buildTargetNameButton = new BuildTargetSelectionButton(this._config, 3.3);
 
     private readonly _debugButton: DebugButton = new DebugButton(this._config, 3.22);
+    private readonly _debugButtonWithoutBuild: DebugButtonWithoutBuild = new DebugButtonWithoutBuild(this._config, 3.22);
     private readonly _launchButton = new LaunchButton(this._config, 3.21);
     private readonly _launchTargetNameButton = new LaunchTargetSelectionButton(this._config, 3.2);
 
@@ -655,6 +685,7 @@ export class StatusBar implements vscode.Disposable {
             this._buildTargetNameButton,
             this._launchTargetNameButton,
             this._debugButton,
+            this._debugButtonWithoutBuild,
             this._buildButton,
             this._testButton,
             this._launchButton,
@@ -697,6 +728,7 @@ export class StatusBar implements vscode.Disposable {
         this._launchTargetNameButton.text = v;
         this._launchButton.target = v;
         this._debugButton.target = v;
+        this._debugButtonWithoutBuild.target = v;
     }
     setCTestEnabled(v: boolean): void {
         this._testButton.enabled = v;
@@ -725,6 +757,9 @@ export class StatusBar implements vscode.Disposable {
     }
     hideDebugButton(shouldHide: boolean = true): void {
         this._debugButton.hidden = shouldHide;
+    }
+    hidedebugButtonWithoutBuild(shouldHide: boolean = true): void {
+        this._debugButtonWithoutBuild.hidden = shouldHide;
     }
     hideBuildButton(shouldHide: boolean = true): void {
         this._buildButton.hidden = shouldHide;

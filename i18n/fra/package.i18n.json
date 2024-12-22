@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "Modifier le cache CMake",
 	"cmake-tools.command.cmake.quickStart.title": "Démarrage rapide",
 	"cmake-tools.command.cmake.debugTarget.title": "Déboguer",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Déboguer tous les projets",
 	"cmake-tools.command.cmake.launchTarget.title": "Exécuter sans débogage",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Exécuter tous les projets sans débogage",

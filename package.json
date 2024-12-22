@@ -50,6 +50,7 @@
     "onCommand:cmake.ctest",
     "onCommand:cmake.ctestAll",
     "onCommand:cmake.debugTarget",
+    "onCommand:cmake.debugTargetWithoutBuild",
     "onCommand:cmake.debugTargetAll",
     "onCommand:cmake.editCache",
     "onCommand:cmake.editCacheUI",
@@ -421,6 +422,12 @@
         "category": "CMake"
       },
       {
+        "command": "cmake.debugTargetWithoutBuild",
+        "title": "%cmake-tools.command.cmake.debugTargetWithoutBuild.title%",
+        "when": "cmake:enableFullFeatureSet",
+        "category": "CMake"
+      },
+      {
         "command": "cmake.debugTargetAll",
         "title": "%cmake-tools.command.cmake.debugTargetAll.title%",
         "when": "cmake:enableFullFeatureSet",
@@ -497,6 +504,11 @@
         "command": "cmake.outline.debugTarget",
         "when": "cmake:enableFullFeatureSet",
         "title": "%cmake-tools.command.cmake.outline.debugTarget.title%"
+      },
+      {
+        "command": "cmake.outline.debugTargetWithoutBuild",
+        "when": "cmake:enableFullFeatureSet",
+        "title": "%cmake-tools.command.cmake.outline.debugTargetWithoutBuild.title%"
       },
       {
         "command": "cmake.outline.launchTarget",
@@ -708,6 +720,10 @@
           "when": "!cmake:hideDebugCommand && cmake:enableFullFeatureSet"
         },
         {
+          "command": "cmake.debugTargetWithoutBuild",
+          "when": "!cmake:hideDebugCommand && cmake:enableFullFeatureSet"
+        },
+        {
           "command": "cmake.debugTargetAll",
           "when": "cmake:multiRoot && !cmake:hideDebugCommand && cmake:enableFullFeatureSet"
         },
@@ -804,6 +820,10 @@
           "when": "never"
         },
         {
+          "command": "cmake.outline.debugTargetWithoutBuild",
+          "when": "never"
+        },
+        {
           "command": "cmake.outline.launchTarget",
           "when": "never"
         },
@@ -877,6 +897,11 @@
           "command": "cmake.outline.debugTarget",
           "when": "view == cmake.outline && cmake:enableFullFeatureSet && viewItem =~ /type=EXECUTABLE/",
           "group": "1_targetActions@3"
+        },
+        {
+          "command": "cmake.outline.debugTargetWithoutBuild",
+          "when": "view == cmake.outline && cmake:enableFullFeatureSet && viewItem =~ /type=EXECUTABLE/",
+          "group": "1_targetActions@6"
         },
         {
           "command": "cmake.outline.launchTarget",
@@ -1020,6 +1045,12 @@
         },
         {
           "command": "cmake.debugTarget",
+          "alt": "cmake.selectLaunchTarget",
+          "when": "cmake:enableTouchBar.debug && cmake:enableFullFeatureSet && !cmake:hideDebugCommand",
+          "group": "CMake:run"
+        },
+        {
+          "command": "cmake.debugTargetWithoutBuild",
           "alt": "cmake.selectLaunchTarget",
           "when": "cmake:enableTouchBar.debug && cmake:enableFullFeatureSet && !cmake:hideDebugCommand",
           "group": "CMake:run"
@@ -1913,6 +1944,11 @@
         "when": "!inDebugMode && inCMakeProject && !cmake:hideDebugCommand && cmake:enableFullFeatureSet"
       },
       {
+        "key": "f6",
+        "command": "cmake.debugTargetWithoutBuild",
+        "when": "!inDebugMode && inCMakeProject && !cmake:hideDebugCommand && cmake:enableFullFeatureSet"
+      },
+      {
         "key": "shift+f5",
         "command": "cmake.launchTarget",
         "when": "!inDebugMode && !cmake:hideDebugCommand && cmake:enableFullFeatureSet"
@@ -2064,7 +2100,8 @@
     "vscode-nls": "^5.0.0",
     "vscode-tas-client": "^0.1.22",
     "which": "~2.0.2",
-    "xml2js": "^0.4.23"
+    "xml2js": "^0.4.23",
+    "yarn": "^1.22.17"
   },
   "resolutions": {
     "chokidar": "^3.5.1",

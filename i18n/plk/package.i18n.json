@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "Edytuj pamięć podręczną narzędzia CMake",
 	"cmake-tools.command.cmake.quickStart.title": "Szybki start",
 	"cmake-tools.command.cmake.debugTarget.title": "Debuguj",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Debuguj wszystkie projekty",
 	"cmake-tools.command.cmake.launchTarget.title": "Uruchom bez debugowania",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Uruchom wszystkie projekty bez debugowania",

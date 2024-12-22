@@ -45,6 +45,7 @@
 	"cmake-tools.command.cmake.ctestAll.title": "Esegui test per tutti i progetti",
 	"cmake-tools.command.cmake.editCache.title": "Modifica la cache di CMake",
 	"cmake-tools.command.cmake.quickStart.title": "Avvio rapido",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTarget.title": "Debug",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Esegui debug di tutti i progetti",
 	"cmake-tools.command.cmake.launchTarget.title": "Esegui senza debug",

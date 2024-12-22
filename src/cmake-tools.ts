@@ -2031,6 +2031,46 @@ export class CMakeTools implements vscode.Disposable, api.CMakeToolsAPI {
         return chosen;
     }
 
+    async prepareLaunchTargetExecutableWithoutBuild(name?: string): Promise<api.ExecutableTarget | null> {
+        let chosen: api.ExecutableTarget;
+
+        // Ensure that we've configured the project already. If we haven't, `getOrSelectLaunchTarget` won't see any
+        // executable targets and may show an uneccessary prompt to the user
+        const isReconfigurationNeeded = await this._needsReconfigure();
+        if (isReconfigurationNeeded) {
+            const rc = await this.configureInternal(ConfigureTrigger.launch, [], ConfigureType.Normal);
+            if (rc !== 0) {
+                log.debug(localize('project.configuration.failed', 'Configuration of project failed.'));
+                return null;
+            }
+        }
+
+        if (name) {
+            const found = (await this.executableTargets).find(e => e.name === name);
+            if (!found) {
+                return null;
+            }
+            chosen = found;
+        } else {
+            const current = await this.getOrSelectLaunchTarget();
+            if (!current) {
+                return null;
+            }
+            chosen = current;
+        }
+
+        // const buildOnLaunch = this.workspaceContext.config.buildBeforeRun;
+        // if (buildOnLaunch || isReconfigurationNeeded) {
+        //     const rc_build = await this.build([chosen.name]);
+        //     if (rc_build !== 0) {
+        //         log.debug(localize('build.failed', 'Build failed'));
+        //         return null;
+        //     }
+        // }
+
+        return chosen;
+    }
+
     async getOrSelectLaunchTarget(): Promise<api.ExecutableTarget | null> {
         const current = await this.getCurrentLaunchTarget();
         if (current) {
@@ -2065,6 +2105,96 @@ export class CMakeTools implements vscode.Disposable, api.CMakeToolsAPI {
         }
 
         const targetExecutable = await this.prepareLaunchTargetExecutable(name);
+        if (!targetExecutable) {
+            log.error(localize('failed.to.prepare.target', 'Failed to prepare executable target with name \'{0}\'', name));
+            return null;
+        }
+
+        let debug_config;
+        try {
+            const cache = await CMakeCache.fromPath(drv.cachePath);
+            debug_config = await debugger_mod.getDebugConfigurationFromCache(cache, targetExecutable, process.platform,
+                this.workspaceContext.config.debugConfig?.MIMode,
+                this.workspaceContext.config.debugConfig?.miDebuggerPath);
+            log.debug(localize('debug.configuration.from.cache', 'Debug configuration from cache: {0}', JSON.stringify(debug_config)));
+        } catch (error: any) {
+            void vscode.window
+                .showErrorMessage(error.message, {
+                    title: localize('debugging.documentation.button', 'Debugging documentation'),
+                    isLearnMore: true
+                })
+                .then(item => {
+                    if (item && item.isLearnMore) {
+                        open('https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html');
+                    }
+                });
+            log.debug(localize('problem.getting.debug', 'Problem getting debug configuration from cache.'), error);
+            return null;
+        }
+
+        if (debug_config === null) {
+            log.error(localize('failed.to.generate.debugger.configuration', 'Failed to generate debugger configuration'));
+            void vscode.window.showErrorMessage(localize('unable.to.generate.debugging.configuration', 'Unable to generate a debugging configuration.'));
+            return null;
+        }
+
+        // Add debug configuration from settings.
+        const user_config = this.workspaceContext.config.debugConfig;
+        Object.assign(debug_config, user_config);
+        // Add environment variables from configurePreset.
+        if (this.configurePreset?.environment) {
+            const configure_preset_environment = await drv.getConfigureEnvironment();
+            debug_config.environment = debug_config.environment ? debug_config.environment.concat(util.makeDebuggerEnvironmentVars(configure_preset_environment)) : [];
+        }
+
+        log.debug(localize('starting.debugger.with', 'Starting debugger with following configuration.'), JSON.stringify({
+            workspace: this.folder.uri.toString(),
+            config: debug_config
+        }));
+
+        const cfg = vscode.workspace.getConfiguration('cmake', this.folder.uri).inspect<object>('debugConfig');
+        const customSetting = (cfg?.globalValue !== undefined || cfg?.workspaceValue !== undefined || cfg?.workspaceFolderValue !== undefined);
+        let dbg = debug_config.MIMode?.toString();
+        if (!dbg && debug_config.type === "cppvsdbg") {
+            dbg = "vsdbg";
+        } else {
+            dbg = "(unset)";
+        }
+        const telemetryProperties: telemetry.Properties = {
+            customSetting: customSetting.toString(),
+            debugger: dbg
+        };
+
+        telemetry.logEvent('debug', telemetryProperties);
+
+        await vscode.debug.startDebugging(this.folder, debug_config);
+        return vscode.debug.activeDebugSession!;
+    }
+
+    /**
+     * Implementation of `cmake.debugTargetWithoutBuild`
+     */
+     async debugTargetWithoutBuild(name?: string): Promise<vscode.DebugSession | null> {
+        const drv = await this.getCMakeDriverInstance();
+        if (!drv) {
+            void vscode.window.showErrorMessage(localize('set.up.and.build.project.before.debugging', 'Set up and build your CMake project before debugging.'));
+            return null;
+        }
+        if (drv instanceof LegacyCMakeDriver) {
+            void vscode.window
+                .showWarningMessage(localize('target.debugging.unsupported', 'Target debugging is no longer supported with the legacy driver'), {
+                    title: localize('learn.more.button', 'Learn more'),
+                    isLearnMore: true
+                })
+                .then(item => {
+                    if (item && item.isLearnMore) {
+                        open('https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html');
+                    }
+                });
+            return null;
+        }
+
+        const targetExecutable = await this.prepareLaunchTargetExecutableWithoutBuild(name);
         if (!targetExecutable) {
             log.error(localize('failed.to.prepare.target', 'Failed to prepare executable target with name \'{0}\'', name));
             return null;

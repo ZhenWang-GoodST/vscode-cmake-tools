@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "Upravit mezipaměť CMake",
 	"cmake-tools.command.cmake.quickStart.title": "Rychlý Start",
 	"cmake-tools.command.cmake.debugTarget.title": "Ladit",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Ladit všechny projekty",
 	"cmake-tools.command.cmake.launchTarget.title": "Spustit bez ladění",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Spustit všechny projekty bez ladění",

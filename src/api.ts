@@ -281,6 +281,11 @@ export interface CMakeToolsAPI extends Disposable {
     debugTarget(): Thenable<DebugSession | null>;
 
     /**
+     * Start the active target with a debugger without build.
+     */
+     debugTargetWithoutBuild(): Thenable<DebugSession | null>;
+
+    /**
      * Get the path to the active launch target
      */
     launchTargetPath(): Thenable<string | null>;

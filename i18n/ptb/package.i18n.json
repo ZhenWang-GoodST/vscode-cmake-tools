@@ -47,6 +47,7 @@
 	"cmake-tools.command.cmake.quickStart.title": "Início Rápido",
 	"cmake-tools.command.cmake.debugTarget.title": "Depurar",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Depurar Todos os Projetos",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.launchTarget.title": "Executar sem Depuração",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Executar Todos os Projetos sem Depuração",
 	"cmake-tools.command.cmake.selectLaunchTarget.title": "Definir o Destino de Depuração",

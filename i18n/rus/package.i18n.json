@@ -47,6 +47,7 @@
 	"cmake-tools.command.cmake.quickStart.title": "Краткое руководство",
 	"cmake-tools.command.cmake.debugTarget.title": "Отладить",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Отладка всех проектов",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.launchTarget.title": "Запуск без отладки",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Выполнение всех проектов без отладки",
 	"cmake-tools.command.cmake.selectLaunchTarget.title": "Задание целевого объекта отладки",

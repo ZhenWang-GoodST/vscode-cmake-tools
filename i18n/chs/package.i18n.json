@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "编辑 CMake 缓存",
 	"cmake-tools.command.cmake.quickStart.title": "快速入门",
 	"cmake-tools.command.cmake.debugTarget.title": "调试",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "调试所有项目",
 	"cmake-tools.command.cmake.launchTarget.title": "运行但不调试",
 	"cmake-tools.command.cmake.launchTargetAll.title": "运行所有项目但不调试",

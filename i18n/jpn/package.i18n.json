@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "CMake キャッシュの編集",
 	"cmake-tools.command.cmake.quickStart.title": "クイック スタート",
 	"cmake-tools.command.cmake.debugTarget.title": "デバッグ",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "すべてのプロジェクトのデバッグ",
 	"cmake-tools.command.cmake.launchTarget.title": "デバッグなしで実行",
 	"cmake-tools.command.cmake.launchTargetAll.title": "デバッグなしですべてのプロジェクトを実行",

@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "編輯 CMake 快取",
 	"cmake-tools.command.cmake.quickStart.title": "快速入門",
 	"cmake-tools.command.cmake.debugTarget.title": "偵錯",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "偵錯所有專案",
 	"cmake-tools.command.cmake.launchTarget.title": "執行但不進行偵錯",
 	"cmake-tools.command.cmake.launchTargetAll.title": "執行所有專案但不進行偵錯",

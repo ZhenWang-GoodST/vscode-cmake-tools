@@ -1359,6 +1359,10 @@ class ExtensionManager implements vscode.Disposable {
         return this.mapCMakeToolsFolder(cmt => cmt.debugTarget(name), folder);
     }
 
+    debugTargetWithoutBuild(folder?: vscode.WorkspaceFolder, name?: string): Promise<vscode.DebugSession | null> {
+        return this.mapCMakeToolsFolder(cmt => cmt.debugTargetWithoutBuild(name), folder);
+    }
+
     async debugTargetAll(): Promise<(vscode.DebugSession | null)[]> {
         const debugSessions: (vscode.DebugSession | null)[] = [];
         for (const cmtFolder of this._folders) {
@@ -1442,6 +1446,7 @@ class ExtensionManager implements vscode.Disposable {
     async hideDebugCommand(shouldHide: boolean = true) {
         // Don't hide command selectLaunchTarget here since the target can still be useful, one example is ${command:cmake.launchTargetPath} in launch.json
         this._statusBar.hideDebugButton(shouldHide);
+        this._statusBar.hidedebugButtonWithoutBuild(shouldHide);
         await util.setContextValue(HIDE_DEBUG_COMMAND_KEY, shouldHide);
     }
 
@@ -1687,6 +1692,7 @@ async function setup(context: vscode.ExtensionContext, progress?: ProgressHandle
         'buildDirectory',
         'executableTargets',
         'debugTarget',
+        'debugTargetWithoutBuild',
         'debugTargetAll',
         'launchTarget',
         'launchTargetAll',
@@ -1734,7 +1740,8 @@ async function setup(context: vscode.ExtensionContext, progress?: ProgressHandle
             (what: TargetNode) => runCommand('build', what.folder, what.name)),
         vscode.commands.registerCommand('cmake.outline.debugTarget',
             (what: TargetNode) => runCommand('debugTarget', what.folder, what.name)),
-        vscode.commands.registerCommand('cmake.outline.launchTarget',
+            vscode.commands.registerCommand('cmake.outline.debugTargetWithoutBuild',
+            (what: TargetNode) => runCommand('debugTargetWithoutBuild', what.folder, what.name)),        vscode.commands.registerCommand('cmake.outline.launchTarget',
             (what: TargetNode) => runCommand('launchTarget', what.folder, what.name)),
         vscode.commands.registerCommand('cmake.outline.setDefaultTarget',
             (what: TargetNode) => runCommand('setDefaultTarget', what.folder, what.name)),

@@ -46,6 +46,7 @@
 	"cmake-tools.command.cmake.editCache.title": "Editar la memoria caché de CMake",
 	"cmake-tools.command.cmake.quickStart.title": "Inicio rápido",
 	"cmake-tools.command.cmake.debugTarget.title": "Depurar",
+	"cmake-tools.command.cmake.debugTargetWithoutBuild.title": "神奇调试",
 	"cmake-tools.command.cmake.debugTargetAll.title": "Depurar todos los proyectos",
 	"cmake-tools.command.cmake.launchTarget.title": "Ejecutar sin depuración",
 	"cmake-tools.command.cmake.launchTargetAll.title": "Ejecutar todos los proyectos sin depuración",
